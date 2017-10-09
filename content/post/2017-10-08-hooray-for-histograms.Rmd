@@ -1,0 +1,41 @@
+---
+title: Hooray for Histograms!
+author: 'Maria Williams '
+date: '2017-10-08'
+slug: hooray-for-histograms
+categories:
+  - R Studio
+tags:
+  - ggplot2
+  - histograms
+---
+
+Histograms can be a very useful source to visualize data. Today, we are going to learn how to code for baseball players weights and visualize that information through a histogram. The first thing we must do is bring our databases down with library.
+```{r warning=FALSE, warning=FALSE}
+library(Lahman)
+library(sqldf)
+library(ggplot2)
+```
+Perfect! Now let's collect our data.We want to get the weights of every baseball player from the Master table. The code is as follows:
+```{r}
+query<- "SELECT weight
+FROM Master"
+sqldf(query)
+```
+
+Wow, that's a lot of data. Let's store that into results.
+```{r}
+query<- "SELECT weight
+FROM Master"
+result<-sqldf(query)
+```
+Good! Now we can make our histogram. When making the histogram, we can make the border and the fill of the bars different colors. We can also control how many bars we see on the graph. I am going to code it so we see 30 bars(this is also known as bins0.
+```{r}
+ggplot()+
+  geom_histogram(data=result,aes(x=weight),color="red",fill="white",bins = 30)+
+  ggtitle("Baseball Player Body-Weight Distribution")
+
+```
+```
+That looks amazing! If you want you can change the number of bins, but I am going to leave it at 30!
+

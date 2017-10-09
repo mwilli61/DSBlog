@@ -1,0 +1,42 @@
+---
+title: Oh the Joy of Time Series Plots
+author: 'Maria Williams '
+date: '2017-09-28'
+slug: oh-the-joy-of-time-series-plots
+categories:
+  - R Studio
+tags:
+  - ggplot2
+  - timeseriesplot
+---
+
+homeruns. We are going to visualize that data through a time series plot.The first thing we must do is bring down all our databases through library.
+```{r warning=FALSE,message=FALSE}
+library(Lahman)
+library(sqldf)
+library(ggplot2)
+```
+Great, now that we have our databases loaded, we can gather the information needed.The coding for the information is as follows:
+```{r}
+query<-"SELECT yearID,HR
+FROM Batting
+WHERE playerID='ruthba01'"
+sqldf(query)
+```
+Awesome, now that we have the information, let's store that into result.
+```{r}
+query<-"SELECT yearID,HR
+FROM Batting
+WHERE playerID='ruthba01'"
+result<-sqldf(query)
+```
+Great! Now let's make the graph! The coding for the graph is as follows:
+```{r}
+ggplot()+
+  geom_line(data=result,aes(x=yearID,y=HR))+
+  geom_point(data=result,aes(x=yearID,y=HR))+
+  ggtitle("Ruth's Homerun Totals Through the Years")+
+  xlab("year")+
+  ylab("homerun")
+```
+Wow, that looks great!

@@ -1,0 +1,59 @@
+---
+title: Oh the Joy of Time Series Plots
+author: 'Maria Williams '
+date: '2017-09-28'
+slug: oh-the-joy-of-time-series-plots
+categories:
+  - R Studio
+tags:
+  - ggplot2
+  - timeseriesplot
+---
+
+
+
+<p>homeruns. We are going to visualize that data through a time series plot.The first thing we must do is bring down all our databases through library.</p>
+<pre class="r"><code>library(Lahman)
+library(sqldf)
+library(ggplot2)</code></pre>
+<p>Great, now that we have our databases loaded, we can gather the information needed.The coding for the information is as follows:</p>
+<pre class="r"><code>query&lt;-&quot;SELECT yearID,HR
+FROM Batting
+WHERE playerID=&#39;ruthba01&#39;&quot;
+sqldf(query)</code></pre>
+<pre><code>##    yearID HR
+## 1    1914  0
+## 2    1915  4
+## 3    1916  3
+## 4    1917  2
+## 5    1918 11
+## 6    1919 29
+## 7    1920 54
+## 8    1921 59
+## 9    1922 35
+## 10   1923 41
+## 11   1924 46
+## 12   1925 25
+## 13   1926 47
+## 14   1927 60
+## 15   1928 54
+## 16   1929 46
+## 17   1930 49
+## 18   1931 46
+## 19   1932 41
+## 20   1933 34
+## 21   1934 22
+## 22   1935  6</code></pre>
+<p>Awesome, now that we have the information, let’s store that into result.</p>
+<pre class="r"><code>query&lt;-&quot;SELECT yearID,HR
+FROM Batting
+WHERE playerID=&#39;ruthba01&#39;&quot;
+result&lt;-sqldf(query)</code></pre>
+<p>Great! Now let’s make the graph! The coding for the graph is as follows:</p>
+<pre class="r"><code>ggplot()+
+  geom_line(data=result,aes(x=yearID,y=HR))+
+  geom_point(data=result,aes(x=yearID,y=HR))+
+  ggtitle(&quot;Ruth&#39;s Homerun Totals Through the Years&quot;)+
+  xlab(&quot;year&quot;)+
+  ylab(&quot;homerun&quot;)</code></pre>
+<p><img src="/post/2017-09-28-oh-the-joy-of-time-series-plots_files/figure-html/unnamed-chunk-4-1.png" width="672" /> Wow, that looks great!</p>

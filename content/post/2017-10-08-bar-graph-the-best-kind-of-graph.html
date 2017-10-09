@@ -1,0 +1,66 @@
+---
+title: Bar Graph= The Best Kind of Graph
+author: 'Maria Williams '
+date: '2017-10-08'
+slug: bar-graph-the-best-kind-of-graph
+categories:
+  - R Studio
+tags:
+  - ggplot2
+  - Bargraph
+---
+
+
+
+<p>I am sure all of you know what a bar graph is, well today we are going to code for one. We are going to take baseball teams in 1980 and order them by homeruns. Let’s begin. The first thing we must do is bring down our databases with library.</p>
+<pre class="r"><code>library(Lahman)
+library(sqldf)
+library(ggplot2)</code></pre>
+<p>Great! Now let’s gather our information.We are going to want to gather teams and the homeruns from 1980. The code is as follows:</p>
+<pre class="r"><code>query&lt;-&quot;SELECT name,HR
+From Teams
+WHERE yearID=1980
+ORDER BY HR&quot;
+sqldf(query)</code></pre>
+<pre><code>##                     name  HR
+## 1          New York Mets  61
+## 2       San Diego Padres  67
+## 3         Houston Astros  75
+## 4   San Francisco Giants  80
+## 5      Cleveland Indians  89
+## 6      Chicago White Sox  91
+## 7        Minnesota Twins  99
+## 8    St. Louis Cardinals 101
+## 9       Seattle Mariners 104
+## 10     California Angels 106
+## 11          Chicago Cubs 107
+## 12       Cincinnati Reds 113
+## 13        Montreal Expos 114
+## 14    Kansas City Royals 115
+## 15    Pittsburgh Pirates 116
+## 16 Philadelphia Phillies 117
+## 17         Texas Rangers 124
+## 18     Toronto Blue Jays 126
+## 19     Oakland Athletics 137
+## 20        Detroit Tigers 143
+## 21        Atlanta Braves 144
+## 22   Los Angeles Dodgers 148
+## 23     Baltimore Orioles 156
+## 24        Boston Red Sox 162
+## 25      New York Yankees 189
+## 26     Milwaukee Brewers 203</code></pre>
+<p>Let’s store that information into result to make it a little bit easier to handle. We also want to save it as a factor so it will order our results in descending order.</p>
+<pre class="r"><code>query&lt;-&quot;SELECT name,HR
+From Teams
+WHERE yearID=1980
+ORDER BY HR&quot;
+result&lt;-sqldf(query)
+result$name&lt;-factor(result$name,levels=result$name)</code></pre>
+<p>Great! Let’s make our graph! Like the histogram, we can control the fill and the border outline of the bars! I made mine purple and blue!</p>
+<pre class="r"><code>ggplot()+
+  geom_bar(data=result,aes(x=name,y=HR),stat=&#39;identity&#39;,color=&#39;blue&#39;,fill=&#39;purple&#39;)+
+  coord_flip()+
+  ylab(&#39;homeruns&#39;)+
+  xlab(&quot;team&quot;)+
+  ggtitle(&#39;1980 Team Homerun Distribution&#39;)</code></pre>
+<p><img src="/post/2017-10-08-bar-graph-the-best-kind-of-graph_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
